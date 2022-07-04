@@ -26,7 +26,8 @@ builder.Services.AddAuthentication()
 
 .AddGoogle(options =>
 {
-   
+    options.ClientId = "";
+    options.ClientSecret = "";
 });
 builder.Services.ConfigureApplicationCookie(options => {
     options.LoginPath = "/Account/Login";
