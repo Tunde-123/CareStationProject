@@ -1,0 +1,96 @@
+﻿@using CareStationProject.ViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> signInManager
+@model LoginViewModel
+
+
+<section>
+ 
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">Login</h2>
+
+              <form asp-controller = "Account" asp-action ="Login" method= "post" role = "form" >
+
+                
+
+                <div class="form-group">
+                  <input asp-for="Email" class="form-control form-control-lg" />
+                  <label class="form-label" asp-for="Email">Your Name</label>
+                  <span asp-validation-for = "Email" class = "text danger"></span>
+                </div>
+
+                <div class="form-group">
+                  <input asp-for="Password"  class="form-control form-control-lg" />
+                  <label class="form-label" asp-for = "Password">Password</label>
+                  <span asp-validation-for = "Password" class ="text-danger"></Span>
+                </div>
+                <div>
+
+                    <div classs = "form-group">
+                        <div class = "col-md-10">
+                            <div class = "custom-checkbox">
+
+                                <label asp-for= "RememberMe">
+                                    <input asp-for = "RememberMe"/>
+                                    @Html.DisplayNameFor(m=>m.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                
+                
+
+                <div class="d-flex justify-content-center">
+                  <button type="submit"
+                    class="btn btn-success ">Login</button>
+                </div>
+
+                <p>
+                    <a asp-action= "Register"> Register as a new user</a>
+<
+                </p>
+                <p>
+                    <a asp-action= "ForgotPassword"> Forgot your password ?</a>
+<
+                </p>
+
+              </form>
+               @{ 
+        var schemes = await signInManager.GetExternalAuthenticationSchemesAsync();
+        var loginProivders = schemes.ToList();
+    }
+    @if (loginProivders.Count() > 0)
+    {
+    <div class="col-md-4">
+        <section>
+            <h4>User another service to log in.</h4>
+            <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" role="form">
+                <div>
+                    <p>
+                        @foreach(var provider in loginProivders)
+                        {
+                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" 
+                                    title="Log in using your @provider.Name account">@provider.Name</button>
+                        }
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

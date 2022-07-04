@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<AppUser> SignInManager;
+@inject UserManager<AppUser> UserManager;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="text-center">
+    <h1 class="display-4">Welcome  @UserManager.GetUserName(User) to the CareStation home page</h1>
+    
+    </div>
+}
+else
+{ <div class = "text-center">   
+    <hi class = "display-4">
+         We are in the home page 
+    </hi>
+</div>
+  
+
+}
